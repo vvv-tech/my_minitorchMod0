@@ -129,12 +129,7 @@ def map(fn: Callable[[float], float]) -> Callable[[Iterable[float]], Iterable[fl
         A function that takes a list, applies `fn` to each element, and returns a
          new list
     """
-    def apply(lst):
-        res = []
-        for elem in lst:
-            res.append(fn(elem))
-        return res
-    return apply
+    return lambda x: [fn(_) for _ in x]
 
 
 def negList(ls: Iterable[float]) -> Iterable[float]:
@@ -158,12 +153,9 @@ def zipWith(
          applying fn(x, y) on each pair of elements.
 
     """
-    def apply(ls1, ls2):
-        res = []
-        for elem1, elem2 in zip(ls1, ls2):
-            res.append(fn(elem1, elem2))
-        return res
-    return apply
+    return lambda ls1, ls2: [fn(_1, _2) 
+                             for _1, _2 
+                             in zip(ls1, ls2)]
 
 
 def addLists(ls1: Iterable[float], ls2: Iterable[float]) -> Iterable[float]:
