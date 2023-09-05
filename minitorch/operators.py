@@ -88,8 +88,13 @@ def exp(x: float) -> float:
 
 def log_back(x: float, d: float) -> float:
     r"If $f = log$ as above, compute $d \times f'(x)$"
-    # TODO: Implement for Task 0.1.
-    raise NotImplementedError("Need to implement for Task 0.1")
+    def apply(f):
+        result = x
+        if f is log:
+            for i in range(d):
+                result = f(result)
+        return result
+    return apply
 
 
 def inv(x: float) -> float:
@@ -99,16 +104,24 @@ def inv(x: float) -> float:
 
 def inv_back(x: float, d: float) -> float:
     r"If $f(x) = 1/x$ compute $d \times f'(x)$"
-    if inv(x) == 1 / x:
-        for i in range(d):
-            x = inv(x)
-    return x
+    def apply(f):
+        result = x
+        if f == inv(x):
+            for i in range(d):
+                result = f(result)
+        return result
+    return apply
 
 
 def relu_back(x: float, d: float) -> float:
     r"If $f = relu$ compute $d \times f'(x)$"
-    # TODO: Implement for Task 0.1.
-    raise NotImplementedError("Need to implement for Task 0.1")
+    def apply(f):
+        result = x
+        if f is relu:
+            for i in range(d):
+                result = f(result)
+        return result
+    return apply
 
 
 # ## Task 0.3
@@ -178,17 +191,27 @@ def reduce(
          $x_1 \ldots x_n$ and computes the reduction :math:`fn(x_3, fn(x_2,
          fn(x_1, x_0)))`
     """
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    def apply(ls):
+        result = start
+        for elem in ls:
+            result = fn(elem, result)
+        return result
+    return apply
 
 
 def sum(ls: Iterable[float]) -> float:
     "Sum up a list using `reduce` and `add`."
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    if len(ls) == 0:
+        return 0
+    elif len(ls) == 1:
+        return ls[0]
+    return reduce(add, ls[0])(ls[1:])
 
 
 def prod(ls: Iterable[float]) -> float:
     "Product of a list using `reduce` and `mul`."
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    if len(ls) == 0:
+        return 0
+    elif len(ls) == 1:
+        return ls[0]
+    return reduce(mul, ls[0])(ls[1:])
