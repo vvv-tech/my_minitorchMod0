@@ -60,8 +60,8 @@ def sigmoid(x: float) -> float:
 
     for stability.
     """
-    e = 2.7182818284
-    return 1 / (1 + e**(-x)) if x >= 0 else 1 / (1 + e**(x))
+    e = 2.71828182845904523536
+    return 1 / (1 + e**(-x)) if x >= 0 else e**(x) / (1 + e**(x))
 
 
 def relu(x: float) -> float:

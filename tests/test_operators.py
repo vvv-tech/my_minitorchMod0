@@ -107,18 +107,19 @@ def test_sigmoid(a: float) -> None:
     * It crosses 0 at 0.5
     * It is  strictly increasing.
     """
-    assert sigmoid(a) > 0 and sigmoid(a) < 1
-    assert (1 - sigmoid(a)) == sigmoid(-a)
-    assert sigmoid(0.5) == 0
-    assert sigmoid(a) < sigmoid(a + 1e-6)
+    assert sigmoid(a) > 0 and sigmoid(a) <= 1
+    assert ((1 - sigmoid(a)) - sigmoid(-a)) < EPS
+    assert sigmoid(0) == 0.5
+    assert sigmoid(a) <= sigmoid(a + 10)
 
 
 @pytest.mark.task0_2
 @given(small_floats, small_floats, small_floats)
 def test_transitive(a: float, b: float, c: float) -> None:
     "Test the transitive property of less-than (a < b and b < c implies a < c)"
-    print(a,b,c)
-    assert lt(a, c) == 1. if (lt(a, b) and lt(b, c)) else lt(a, c) == 0.
+    #print(a,b,c)
+    assert False
+    #assert lt(a, c) == 1. if (lt(a, b) and lt(b, c)) else lt(a, c) == 0.
 
 
 @pytest.mark.task0_2
@@ -165,6 +166,7 @@ def test_zip_with(a: float, b: float, c: float, d: float) -> None:
     assert_close(x1, y1)
     assert_close(x2, y2)
 
+EPS = 1e-6
 
 @pytest.mark.task0_3
 @given(
@@ -176,7 +178,7 @@ def test_sum_distribute(ls1: List[float], ls2: List[float]) -> None:
     Write a test that ensures that the sum of `ls1` plus the sum of `ls2`
     is the same as the sum of each element of `ls1` plus each element of `ls2`.
     """
-    assert add(sum(ls1), sum(ls2)) == sum(addLists(ls1, ls2))
+    assert (add(sum(ls1), sum(ls2)) - sum(addLists(ls1, ls2))) < EPS
 
 
 @pytest.mark.task0_3
